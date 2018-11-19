@@ -1,14 +1,20 @@
 let payload = {};
-const Insert = () => ({
-  insertMany: (data) => {
-    console.log('insertMany');
-    payload = Object.assign({}, payload, { insertMany: data });
-    return Insert();
-  },
-  payload: () => {
-    console.log('payload', payload);
-    return payload;
-  }
-});
+const Insert = (transaction) => {
+  return self = {
+    data: (data) => {
+      console.log('insertMany');
+      payload = Object.assign(transaction.payload, { data: data });
+      return self;
+    },
+    options: (options) => {
+      payload = Object.assign(transaction.payload, { options: options });
+      return self;
+    },
+    getPayload: () => {
+      // console.log('payload', payload);
+      return transaction;
+    }
+  };
+};
 
 module.exports = Insert;

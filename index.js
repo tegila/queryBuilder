@@ -4,9 +4,9 @@ const remove = require('./remove');
 const update = require('./update');
 
 const queryBuilder = (target) => {
-  const [db, collection] = target.split("/");
+  const [database, collection] = target.split("/");
   const transaction = {
-    db,
+    database,
     collection,
     payload: {}
   };
@@ -17,12 +17,17 @@ const queryBuilder = (target) => {
     },  
     find: (query) => find({
       ...transaction,
-      type: 'query',
+      type: 'find',
       payload: {        
         query: query || {}
       }
+    }),
+    insert: (type) => insert({
+      ...transaction,
+      type: type
     })
-  }
+
+  };
 };
 
 module.exports = queryBuilder;
