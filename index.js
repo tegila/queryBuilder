@@ -1,7 +1,7 @@
 const find = require('./find');
 const insert = require('./insert');
-const remove = require('./remove');
-const update = require('./update');
+const deleteQuery = require('./remove');
+const updateQuery = require('./update');
 
 const queryBuilder = (target) => {
   const [database, collection] = target.split("/");
@@ -12,9 +12,13 @@ const queryBuilder = (target) => {
   };
 
   return {
-    remove: (order) => {
-
-    },  
+    queryMake: (query) => find({
+      ...transaction,
+      type: 'none',
+      payload: {
+        query: query || {}
+      }
+    }),
     find: (query) => find({
       ...transaction,
       type: 'find',
@@ -25,8 +29,39 @@ const queryBuilder = (target) => {
     insert: (type) => insert({
       ...transaction,
       type: type
+    }),
+    updateOne: (filter, update, options) => updateQuery({
+      ...transaction,
+      type: 'updateOne',
+      payload: {
+        filter: filter || {},
+        update: update || {},
+        options: options || {}
+      }
+    }),
+    updateMany: (filter, update, options) => updateQuery({
+      ...transaction,
+      type: 'updateMany',
+      payload: {
+        filter: filter || {},
+        update: update || {},
+        options: options || {}
+      }
+    }),
+    deleteOne: (filter) => deleteQuery({
+      ...transaction,
+      type: 'deleteOne',
+      payload: {
+        filter: filter || {}
+      }
+    }),
+    deleteMany: (filter) => deleteQuery({
+      ...transaction,
+      type: 'deleteMany',
+      payload: {
+        filter: filter || {}
+      }
     })
-
   };
 };
 

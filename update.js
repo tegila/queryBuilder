@@ -1,81 +1,86 @@
 let payload = {};
 
-const Update = () => ({
+const Update = (transaction) => {
   /** Field Update Operators */
-  currentDate: (value) => {
-    console.log('currentDate');
-    if (typeof value === 'boolean' && value) {
-      payload = Object.assign({}, payload, { $currentDate: value });
-    } else {
-      payload = Object.assign({}, payload, {
-        $currentDate: { $type: value.toLowerCase() }
-      });
+  return self = {
+    currentDate: (field, value) => {
+      console.log(transaction);
+      console.log('currentDate');
+      if (typeof value === 'boolean' && value) {
+        Object.assign(transaction.payload.update, { $currentDate: { [field]: value }});
+      } else {
+        Object.assign(transaction.payload.update, {
+          $currentDate: { field: { $type: value.toLowerCase() }}
+        });
+      }
+      return self;
+    },
+    increment: (field, value) => {
+      console.log('increment');
+      Object.assign(transaction.payload.update, { $inc: { [field]: value } });
+      return self;
+    },
+    min: (field, value) => {
+      console.log('min');
+      Object.assign(transaction.payload.update, { $min: { [field]: value } });
+      return self;
+    },
+    max: (field, value) => {
+      console.log('min');
+      Object.assign(transaction.payload.update, { $max: { [field]: value } });
+      return self;
+    },
+    multiplay: (field, value) => {
+      console.log('multiplay');
+      Object.assign(transaction.payload.update, { $mu: { [field]: value } });
+      return self;
+    },
+    rename: (field, value) => {
+      console.log('rename');
+      Object.assign(transaction.payload.update, { $rename: { [field]: value } });
+      return self;
+    },
+    set: (field, value) => {
+      console.log('set');
+      Object.assign(transaction.payload.update, { $set: { [field]: value } });
+      return self;
+    },
+    setOnInsert: (field, value) => {
+      console.log('setOnInsert');
+      Object.assign(transaction.payload.update, { $setOnInsert: { [field]: value } });
+      Object.assign(transaction.payload.options, { upsert: true });
+      return self;
+    },
+    unset: (field) => {
+      console.log('unset');
+      Object.assign(transaction.payload.update, { $unset: { [field]: '' } });
+      return self;
+    },
+    /** Array Update Operators */
+    addToSet: (field, value) => {
+      console.log('addToSet');
+      Object.assign(transaction.payload.update, { $addToSet: { [field]: value } });
+      return self;
+    },
+    pop: (obj) => {
+      console.log('pop');
+      const field = Object.keys(obj).shift();
+      const value = Object.values(obj).shift();
+      Object.assign(transaction.payload.update, { $pop: { [field]: value } });
+      return self;
+    },
+    pull: (obj) => {
+      console.log('pull');
+      const field = Object.keys(obj).shift();
+      const value = Object.values(obj).shift();
+      Object.assign(transaction.payload.update, { $pull: { [field]: value } });
+      
+      return self;
+    },
+    getPayload: () => {
+      return transaction;
     }
-    return Update();
-  },
-  increment: (field, value) => {
-    console.log('increment');
-    payload = Object.assign({}, payload, { $inc: { [field]: value } });
-    return Update();
-  },
-  min: (field, value) => {
-    console.log('min');
-    payload = Object.assign({}, payload, { $min: { [field]: value } });
-    return Update();
-  },
-  max: (field, value) => {
-    console.log('min');
-    payload = Object.assign({}, payload, { $max: { [field]: value } });
-    return Update();
-  },
-  multiplay: (field, value) => {
-    console.log('multiplay');
-    payload = Object.assign({}, payload, { $mu: { [field]: value } });
-    return Update();
-  },
-  rename: (field, value) => {
-    console.log('rename');
-    payload = Object.assign({}, payload, { $rename: { [field]: value } });
-    return Update();
-  },
-  set: (field, value) => {
-    console.log('set');
-    payload = Object.assign({}, payload, { $set: { [field]: value } });
-    return Update();
-  },
-  setOnInsert: (field, value) => {
-    console.log('setOnInsert');
-    payload = Object.assign({}, payload, { $setOnInsert: { [field]: value } }, { upsert: true });
-    return Update();
-  },
-  unset: (field) => {
-    console.log('unset');
-    payload = Object.assign({}, payload, { $unset: { [field]: '' } });
-    return Update();
-  },
-  /** Array Update Operators */
-  addToSet: (field, value) => {
-    console.log('addToSet');
-    payload = Object.assign({}, payload, { $addToSet: { [field]: value } });
-    return Update();
-  },
-  pop: (obj) => {
-    console.log('pop');
-    const field = Object.keys(obj).shift();
-    const value = Object.values(obj).shift();
-    payload = Object.assign({}, payload, { $pop: { [field]: value } });
-    return Update();
-  },
-  pull: (obj) => {
-    console.log('pull');
-    const field = Object.keys(obj).shift();
-    const value = Object.values(obj).shift();
-    payload = Object.assign({}, payload, { $pull: { [field]: value } });
-    return Update();
-  },
-  toJSON: () => {
-    return JSON.stringify(payload);
   }
-});
+};
 
 module.exports = Update;
