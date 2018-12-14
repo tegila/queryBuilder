@@ -1,0 +1,28 @@
+{
+  "name": "querybuilder",
+  "version": "1.0.0",
+  "description": "MongoDB Query Builder",
+  "main": "src/index.js",
+  "author": "tegila",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tegila/querybuilder/issues"
+  },
+  "homepage": "https://github.com/tegila/querybuilder#readme",
+  "scripts": {
+    "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
+    "test": "mocha -b ./test/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tegila/querybuilder.git"
+  },
+  "keywords": [
+    "json",
+    "node"
+  ],
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0"
+  }
+}

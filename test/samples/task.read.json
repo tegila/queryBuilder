@@ -1,0 +1,23 @@
+{
+  "basic": {
+    "database": "app",
+    "collection": "Todos",
+    "payload": {
+      "query": {}
+    }
+  },
+  "withQuery": {
+    "type": "find",
+    "database": "app",
+    "collection": "Todos",
+    "query": {
+      "completed": false
+    }
+  },
+  "findAll": {
+    "type": "find",
+    "database": "app",
+    "collection": "Todos",
+    "query": {}
+  }
+}

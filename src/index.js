@@ -3,15 +3,24 @@ const insert = require('./insert');
 const deleteQuery = require('./remove');
 const updateQuery = require('./update');
 
-const queryBuilder = (target) => {
-  const [database, collection] = target.split("/");
+const queryBuilder = () => {
   const transaction = {
-    database,
-    collection,
+    database: null,
+    collection: null,
     payload: {}
   };
 
-  return {
+  return self = {
+    database: (name) => {
+      // console.log('database');
+      Object.assign(transaction, { database: name });
+      return self;
+    },
+    collection: (name) => {
+      // console.log('collection');
+      Object.assign(transaction, { collection: name });
+      return self;
+    },
     queryMake: (query) => find({
       ...transaction,
       type: 'none',

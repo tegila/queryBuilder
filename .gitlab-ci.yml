@@ -1,0 +1,26 @@
+before_script:
+  - date
+
+after_script:
+  - date
+
+stages:
+  - test
+
+test1:
+  image: node:alpine
+  stage: test
+  cache:
+    paths:
+      - node_modules/
+  before_script:
+    - date
+    - yarn install
+    - date
+  script:
+    - node --version
+    - date
+    - yarn test
+  tags:
+    - docker
+    - gce
