@@ -17,6 +17,8 @@ test1:
     - date
     - yarn install
     - date
+    - yarn global add prettier
+    - date
   script:
     - node --version
     - date

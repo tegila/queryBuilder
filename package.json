@@ -11,7 +11,8 @@
   "homepage": "https://github.com/tegila/querybuilder#readme",
   "scripts": {
     "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
-    "test": "mocha -b ./test/index.js"
+    "test": "mocha -b ./test/index.js",
+    "sanitize": "prettier --list-different **/*.{js,json}"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
   ],
   "devDependencies": {
     "chai": "^4.2.0",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "prettier": "1.15.3"
   }
 }

@@ -1,11 +1,11 @@
 const Delete = (transaction) => {
   return self = {
-    delete: (filter) => {
+    deleteOne: (filter) => {
       console.log('deleteOne');
       Object.assign(transaction.payload.filter, { filter: filter });
       return self;
     },
-    getPayload: () => {
+    get value() {
       return transaction;
     }
   }

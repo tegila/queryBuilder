@@ -3,7 +3,8 @@
     "database": "app",
     "collection": "Todos",
     "payload": {
-      "query": {}
+      "type": "findOne",
+      "filter": {}
     }
   },
   "withQuery": {

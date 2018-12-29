@@ -5,16 +5,18 @@ const should = chai.should(),
 const queryBuilder = require('../');
 const find_json = require('./samples/task.read.json');
 
+const base = queryBuilder()
+  .database("app")
+  .collection("Todos");
+
 describe('MongoClient.find patterns', () => {
+
+  // it('can set the database', () => {})
+  // it('can set the collection', () => {})
+
   it('basic query', () => {
     
-    const basic_find = queryBuilder()
-      .database("app")
-      .collection("Todos")
-      .find({})
-      .getPayload();
-
-    // console.log(basic_find);
+    const basic_find = base.find({}).value();
     
     expect(basic_find).to.be.an('object');
 
@@ -29,5 +31,25 @@ describe('MongoClient.find patterns', () => {
     expect(basic_find.collection, 'find [collection]').to.be.equal("Todos");
     expect(basic_find).to.deep.own.include(find_json.basic);
 
+  });
+
+  it('basic query with limit', () => {
+    const query_limit = base.find({}).limit(3).value();
+    expect(query_limit.payload.limit).to.be.equal(3);
+  });
+  
+  it('should be able to skip', () => {
+    const query_skip = base.find({}).skip(5).value();
+    expect(query_skip.payload.skip).to.be.equal(5);
+  });
+
+  it('should be able to sort the objects', () => {
+    const query_sort = base.find({}).sort({id: -1}).all().value();
+    console.log(query_sort);
+    expect(query_sort.payload).to.deep.own.include({
+      sort: {
+        id: -1
+      }
+    });
   });
 });

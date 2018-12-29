@@ -1,4 +1,4 @@
-let payload = {};
+
 const Insert = (transaction) => {
   return self = {
     data: (data) => {
@@ -10,7 +10,7 @@ const Insert = (transaction) => {
       payload = Object.assign(transaction.payload, { options: options });
       return self;
     },
-    getPayload: () => {
+    get value() {
       // console.log('payload', payload);
       return transaction;
     }
