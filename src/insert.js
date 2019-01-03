@@ -1,19 +1,30 @@
 
-const Insert = (transaction) => {
+const Insert = (ts, data) => {
+  const transaction = {
+    ...ts,
+    type: 'insert',
+    payload: {
+      type: 'insertOne',
+      data: data,
+    },
+  };
   return self = {
-    data: (data) => {
-      console.log('insertMany');
+    one: (data) => {
       payload = Object.assign(transaction.payload, { data: data });
+      return self;
+    },
+    many: (array) => {
+      payload = Object.assign(transaction.payload, { 
+        type: 'insertMany',
+        data: array
+      });
       return self;
     },
     options: (options) => {
       payload = Object.assign(transaction.payload, { options: options });
       return self;
     },
-    get value() {
-      // console.log('payload', payload);
-      return transaction;
-    }
+    value: () => transaction
   };
 };
 

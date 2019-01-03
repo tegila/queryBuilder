@@ -1,4 +1,4 @@
-const UpdateOps = (transaction) => {
+const UpdateOps = () => {
   /** Field Update Operators */
   return self = {
     currentDate: (field, value) => {
