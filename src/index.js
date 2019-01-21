@@ -2,6 +2,7 @@ const Find = require('./find');
 const Insert = require('./insert');
 const Remove = require('./remove');
 const Update = require('./update');
+const CountDocuments = require('./countDocuments.js');
 
 const queryBuilder = (database, collection) => {
   const transaction = {
@@ -22,6 +23,7 @@ const queryBuilder = (database, collection) => {
     insert: data => Insert(transaction, data),
     update: filter => Update(transaction, filter),
     remove: filter => Remove(transaction, filter),
+    countDocuments: filter => CountDocuments(transaction, filter),
   });
 };
 
