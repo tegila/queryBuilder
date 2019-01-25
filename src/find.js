@@ -25,8 +25,12 @@ const Find = (ts, filter) => {
       Object.assign(transaction.payload, { type: 'findOne' });
       return self;
     },
+    count: value => {
+      Object.assign(transaction.payload, { type: 'countDocuments', count: value });
+      return self;
+    },
     limit: value => {
-      Object.assign(transaction.payload, { type: 'limit', limit: value });
+      Object.assign(transaction.payload, { type: 'countDocuments', limit: value });
       return self;
     },
     projection: projection => {
@@ -34,7 +38,7 @@ const Find = (ts, filter) => {
       return self;
     },
     skip: value => {
-      Object.assign(transaction.payload, { skip: value });
+      Object.assign(transaction.payload, { type: 'countDocuments', skip: value });
       return self;
     },
     sort: object => {
