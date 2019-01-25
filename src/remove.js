@@ -1,7 +1,7 @@
 const Delete = (ts, filter) => {
   const transaction = {
     ...ts,
-    type: 'remove',
+    type: 'delete',
     payload: {
       type: 'deleteOne',
       filter: filter || {},
