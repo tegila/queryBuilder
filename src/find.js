@@ -17,32 +17,32 @@ const Find = (ts, filter) => {
       Object.assign(transaction.payload, { filter });
       return self;
     },
-    all: () => {
-      Object.assign(transaction.payload, { type: 'findMany' });
+    projection: projection => {
+      Object.assign(transaction.payload, { projection });
       return self;
     },
     one: () => {
       Object.assign(transaction.payload, { type: 'findOne' });
       return self;
     },
-    count: value => {
-      Object.assign(transaction.payload, { type: 'countDocuments', count: value });
+    all: () => {
+      Object.assign(transaction.payload, { type: 'findMany' });
       return self;
     },
-    limit: value => {
-      Object.assign(transaction.payload, { type: 'countDocuments', limit: value });
+    count: count => {
+      Object.assign(transaction.payload, { type: 'count', count });
       return self;
     },
-    projection: projection => {
-      Object.assign(transaction.payload, { projection });
+    limit: limit => {
+      Object.assign(transaction.payload, { type: 'paginate', limit });
       return self;
     },
-    skip: value => {
-      Object.assign(transaction.payload, { type: 'countDocuments', skip: value });
+    skip: skip => {
+      Object.assign(transaction.payload, { type: 'paginate', skip });
       return self;
     },
-    sort: object => {
-      Object.assign(transaction.payload, { sort: object });
+    sort: sort => {
+      Object.assign(transaction.payload, { sort });
       return self;
     },
     value: () => transaction,
