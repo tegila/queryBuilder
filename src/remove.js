@@ -1,6 +1,10 @@
 const Delete = (ts, filter) => {
   const transaction = {
     ...ts,
+<<<<<<< HEAD
+=======
+    type: 'delete',
+>>>>>>> 65ab7838e31b80a81da6f78d40a87fbd72f0e488
     payload: {
       type: 'delete',
       subtype: 'deleteOne',
