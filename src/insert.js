@@ -2,9 +2,9 @@
 const Insert = (ts, data) => {
   const transaction = {
     ...ts,
-    type: 'insert',
     payload: {
-      type: 'insertOne',
+      type: 'insert',
+      subtype: 'insertOne',
       data: data,
     },
   };
@@ -15,7 +15,7 @@ const Insert = (ts, data) => {
     },
     many: (array) => {
       payload = Object.assign(transaction.payload, { 
-        type: 'insertMany',
+        subtype: 'insertMany',
         data: array
       });
       return self;

@@ -1,9 +1,9 @@
 const Update = (ts, filter) => {
   const transaction = {
     ...ts,
-    type: 'update',
     payload: {
-      type: 'updateOne',
+      type: 'update',
+      subtype: 'updateOne',
       filter: filter || {},
     },
   };
@@ -18,11 +18,11 @@ const Update = (ts, filter) => {
       return self;
     },
     one: () => {
-      Object.assign(transaction.payload, { type: 'updateOne' });
+      Object.assign(transaction.payload, { subtype: 'updateOne' });
       return self;
     },
     many: () => {
-      Object.assign(transaction.payload, { type: 'updateMany' });
+      Object.assign(transaction.payload, { subtype: 'updateMany' });
       return self;
     },
     ops: ops => {

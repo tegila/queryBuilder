@@ -1,9 +1,9 @@
 const Delete = (ts, filter) => {
   const transaction = {
     ...ts,
-    type: 'remove',
     payload: {
-      type: 'deleteOne',
+      type: 'delete',
+      subtype: 'deleteOne',
       filter: filter || {},
     },
   };
@@ -13,11 +13,11 @@ const Delete = (ts, filter) => {
       return self;
     },
     all: () => {
-      Object.assign(transaction.payload, { type: 'deleteMany' });
+      Object.assign(transaction.payload, { subtype: 'deleteMany' });
       return self;
     },
     one: () => {
-      Object.assign(transaction.payload, { type: 'deleteOne' });
+      Object.assign(transaction.payload, { subtype: 'deleteOne' });
       return self;
     },
     delete: filter => {

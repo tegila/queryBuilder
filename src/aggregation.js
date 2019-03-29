@@ -31,6 +31,7 @@ const Aggregation = () => ({
     return Find(query);
   },
   get value() {
+    payload.nonce = Math.random();
     return JSON.stringify(payload);
   }
 });
