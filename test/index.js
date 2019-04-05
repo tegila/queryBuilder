@@ -18,11 +18,11 @@ describe('MongoClient.find patterns', () => {
 
     expect(basic_find).to.be.an('object');
 
-    expect(basic_find).to.have.all.keys(
+    expect(basic_find).to.include.any.keys(
       'database',
       'collection',
       'type',
-      'payload'
+      'filter'
     );
 
     expect(basic_find.database, 'find [database]').to.be.equal('app');
@@ -35,7 +35,7 @@ describe('MongoClient.find patterns', () => {
       .find({})
       .limit(3)
       .value();
-    expect(query_limit.payload.limit).to.be.equal(3);
+    expect(query_limit.limit).to.be.equal(3);
   });
 
   it('should be able to filter', () => {
@@ -43,7 +43,7 @@ describe('MongoClient.find patterns', () => {
       .find()
       .filter({ name: 'test' })
       .value();
-    expect(query_filter.payload.filter.name).to.be.equal('test');
+    expect(query_filter.filter.name).to.be.equal('test');
   });
 
   it('should be able to skip', () => {
@@ -51,7 +51,7 @@ describe('MongoClient.find patterns', () => {
       .find({})
       .skip(5)
       .value();
-    expect(query_skip.payload.skip).to.be.equal(5);
+    expect(query_skip.skip).to.be.equal(5);
   });
 
   it('should be able to sort the objects', () => {
@@ -60,7 +60,7 @@ describe('MongoClient.find patterns', () => {
       .sort({ id: -1 })
       .all()
       .value();
-    expect(query_sort.payload).to.deep.own.include({
+    expect(query_sort).to.deep.own.include({
       sort: {
         id: -1,
       },

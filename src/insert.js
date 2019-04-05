@@ -1,31 +1,33 @@
 
-const Insert = (ts, data) => {
-  const transaction = {
-    ...ts,
-    payload: {
-      type: 'insert',
-      subtype: 'insertOne',
-      data: data,
-    },
-  };
-  return self = {
+const Insert = (parent, data) => {
+  const payload = Object.assign({}, parent.payload, {
+    type: 'insert',
+    subtype: 'insertOne',
+    data: data,
+    nonce: Math.random()
+  });
+
+  const self = {
+    payload,
     one: (data) => {
-      payload = Object.assign(transaction.payload, { data: data });
-      return self;
+      payload = Object.assign(payload, { data: data });
+      return parent;
     },
     many: (array) => {
-      payload = Object.assign(transaction.payload, { 
+      payload = Object.assign(payload, { 
         subtype: 'insertMany',
         data: array
       });
-      return self;
+      return parent;
     },
     options: (options) => {
-      payload = Object.assign(transaction.payload, { options: options });
-      return self;
+      payload = Object.assign(payload, { options: options });
+      return parent;
     },
-    value: () => transaction
+    value: () => payload
   };
+
+  return Object.assign(parent, self);
 };
 
 module.exports = Insert;

@@ -4,24 +4,25 @@ const Remove = require('./remove');
 const Update = require('./update');
 
 const queryBuilder = (database, collection) => {
-  const transaction = {
+  const payload = {
     database,
     collection
   };
-
+  
   return (self = {
-    database: name => {
-      Object.assign(transaction, { database: name });
+    payload,
+    database: database => {
+      Object.assign(payload, { database });
       return self;
     },
-    collection: name => {
-      Object.assign(transaction, { collection: name });
+    collection: collection => {
+      Object.assign(payload, { collection });
       return self;
     },
-    find: filter => Find(transaction, filter),
-    insert: data => Insert(transaction, data),
-    update: filter => Update(transaction, filter),
-    remove: filter => Remove(transaction, filter),
+    find: filter => Find(self, filter),
+    insert: data => Insert(self, data),
+    update: filter => Update(self, filter),
+    remove: filter => Remove(self, filter),
   });
 };
 

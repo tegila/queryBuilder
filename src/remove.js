@@ -1,35 +1,33 @@
-const Delete = (ts, filter) => {
-  const transaction = {
-    ...ts,
-<<<<<<< HEAD
-=======
+const Delete = (parent, filter) => {
+  const payload = Object.assign({}, parent.payload, {
     type: 'delete',
->>>>>>> 65ab7838e31b80a81da6f78d40a87fbd72f0e488
-    payload: {
-      type: 'delete',
-      subtype: 'deleteOne',
-      filter: filter || {},
-    },
-  };
-  return (self = {
+    subtype: 'deleteOne',
+    filter: filter || {},
+    nonce: Math.random()
+  });
+
+  const self = {
+    payload,
     filter: filter => {
-      Object.assign(transaction.payload, { filter });
+      Object.assign(payload, { filter });
       return self;
     },
     all: () => {
-      Object.assign(transaction.payload, { subtype: 'deleteMany' });
+      Object.assign(payload, { subtype: 'deleteMany' });
       return self;
     },
     one: () => {
-      Object.assign(transaction.payload, { subtype: 'deleteOne' });
+      Object.assign(payload, { subtype: 'deleteOne' });
       return self;
     },
     delete: filter => {
-      Object.assign(transaction.payload.filter, { filter: filter });
+      Object.assign(payload.filter, { filter: filter });
       return self;
     },
-    value: () => transaction,
-  });
+    value: () => payload,
+  };
+
+  return Object.assign(parent, self);
 };
 
 module.exports = Delete;

@@ -3,57 +3,59 @@
  * See {@link https://docs.mongodb.com/manual/reference/operator/query/}
  * Also {@link http://mongodb.github.io/node-mongodb-native/3.1/api/BulkOperationBase.html#find}
  */
-const Find = (ts, filter) => {
-  const transaction = {
-    ...ts,
-    payload: {
-      type: 'find',
-      subtype: 'findOne',
-      filter: filter || {},
-      limit: null,
-      sort: null,
-      skip: null,
-      projection: null
-    },
-  };
-  return (self = {
+const Find = (parent, filter) => {
+  const payload = Object.assign({}, parent.payload, {
+    type: 'find',
+    subtype: 'findOne',
+    filter: filter || {},
+    limit: null,
+    sort: null,
+    skip: null,
+    projection: null,
+    nonce: Math.random(),
+  });
+
+  const self = {
+    payload,
     filter: filter => {
-      Object.assign(transaction.payload, { filter });
-      return self;
+      Object.assign(payload, { filter });
+      return parent;
     },
     all: () => {
-      Object.assign(transaction.payload, { subtype: 'findMany' });
-      return self;
+      Object.assign(payload, { subtype: 'findMany' });
+      return parent;
     },
     one: () => {
-      Object.assign(transaction.payload, { subtype: 'findOne' });
-      return self;
+      Object.assign(payload, { subtype: 'findOne' });
+      return parent;
     },
     projection: projection => {
-      Object.assign(transaction.payload, { subtype: 'paginate', projection });
-      return self;
+      Object.assign(payload, { subtype: 'paginate', projection });
+      return parent;
     },
     limit: limit => {
-      Object.assign(transaction.payload, { subtype: 'paginate', limit });
-      return self;
+      Object.assign(payload, { subtype: 'paginate', limit });
+      return parent;
     },
     skip: skip => {
-      Object.assign(transaction.payload, { subtype: 'paginate', skip });
-      return self;
+      Object.assign(payload, { subtype: 'paginate', skip });
+      return parent;
     },
     sort: sort => {
-      Object.assign(transaction.payload, { subtype: 'paginate', sort });
-      return self;
+      Object.assign(payload, { subtype: 'paginate', sort });
+      return parent;
     },
     count: count => {
-      Object.assign(transaction.payload, {
+      Object.assign(payload, {
         subtype: 'countDocuments',
-        count
+        count,
       });
-      return self;
+      return parent;
     },
-    value: () => transaction,
-  });
+    value: () => payload,
+  };
+
+  return Object.assign(parent, self);
 };
 
 module.exports = Find;

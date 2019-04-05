@@ -2,10 +2,9 @@
   "basic": {
     "database": "app",
     "collection": "Todos",
-    "payload": {
-      "type": "findOne",
-      "filter": {}
-    }
+    "type": "find",
+    "subtype": "findOne",
+    "filter": {}
   },
   "withQuery": {
     "type": "find",

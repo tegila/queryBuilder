@@ -1,36 +1,38 @@
-const Update = (ts, filter) => {
-  const transaction = {
-    ...ts,
-    payload: {
-      type: 'update',
-      subtype: 'updateOne',
-      filter: filter || {},
-    },
-  };
+const Update = (parent, filter) => {
+  const payload = Object.assign({}, parent.payload, {
+    type: 'update',
+    subtype: 'updateOne',
+    filter: filter || {},
+    nonce: Math.random()
+  });
+
   /** Field Update Operators */
-  return self = {
+  const self = {
+    payload,
     filter: filter => {
-      Object.assign(transaction.payload, { filter });
-      return self;
+      Object.assign(payload, { filter });
+      return parent;
     },
     with: new_value => {
       Object.assign(transaction.payload, { update: new_value });
-      return self;
+      return parent;
     },
     one: () => {
-      Object.assign(transaction.payload, { subtype: 'updateOne' });
-      return self;
+      Object.assign(payload, { subtype: 'updateOne' });
+      return parent;
     },
     many: () => {
-      Object.assign(transaction.payload, { subtype: 'updateMany' });
-      return self;
+      Object.assign(payload, { subtype: 'updateMany' });
+      return parent;
     },
     ops: ops => {
-      Object.assign(transaction.payload, { ops });
-      return self;
+      Object.assign(payload, { ops });
+      return parent;
     },
-    value: () => transaction
-  }
+    value: () => payload
+  };
+
+  return Object.assign(parent, self);
 };
 
 module.exports = Update;
