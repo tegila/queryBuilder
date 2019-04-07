@@ -14,7 +14,7 @@ const Update = (parent, filter) => {
       return parent;
     },
     with: new_value => {
-      Object.assign(transaction.payload, { update: new_value });
+      Object.assign(payload, { update: new_value });
       return parent;
     },
     one: () => {

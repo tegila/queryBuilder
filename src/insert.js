@@ -10,18 +10,18 @@ const Insert = (parent, data) => {
   const self = {
     payload,
     one: (data) => {
-      payload = Object.assign(payload, { data: data });
+      Object.assign(payload, { data: data });
       return parent;
     },
     many: (array) => {
-      payload = Object.assign(payload, { 
+      Object.assign(payload, { 
         subtype: 'insertMany',
         data: array
       });
       return parent;
     },
     options: (options) => {
-      payload = Object.assign(payload, { options: options });
+      Object.assign(payload, { options: options });
       return parent;
     },
     value: () => payload
