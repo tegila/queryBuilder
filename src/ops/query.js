@@ -1,3 +1,4 @@
+const logger = process.env.DEBUG ? console.log : null;
 /**
  * Query and Projection Operators
  * See {@link https://docs.mongodb.com/manual/reference/operator/query/}
@@ -10,43 +11,43 @@ const Query = () => {
      * See {@link https://docs.mongodb.com/manual/reference/operator/query-comparison/}
      **/
     eq: (field, value) => {
-      console.log('eq');
+      logger('eq');
       Object.assign(self.payload, { [field]: value });
       return self;
     },
     gt: (field, value) => {
-      console.log('gt');
+      logger('gt');
       Object.assign(self.payload, { [field]: { $gt: value } });
       return self;
     },
     gte: (field, value) => {
-      console.log('gte');
+      logger('gte');
       Object.assign(self.payload, { [field]: { $gte: value } });
       return self;
     },
     in: (field, value) => {
-      console.log('in');
+      logger('in');
       if (typeof value !== 'object') throw '$in needs an array';
       Object.assign(self.payload, { [field]: { $in: value } });
       return self;
     },
     lt: (field, value) => {
-      console.log('lt');
+      logger('lt');
       Object.assign(self.payload, { [field]: { $lt: value } });
       return self;
     },
     lte: (field, value) => {
-      console.log('lte');
+      logger('lte');
       Object.assign(self.payload, { [field]: { $lte: value } });
       return self;
     },
     ne: (field, value) => {
-      console.log('ne');
+      logger('ne');
       Object.assign(self.payload, { [field]: { $ne: value } });
       return self;
     },
     nin: (field, value) => {
-      console.log('nin');
+      logger('nin');
       if (typeof value !== 'object') throw '$nin needs an array';
       Object.assign(self.payload, { [field]: { $nin: value } });
       return self;
@@ -56,7 +57,7 @@ const Query = () => {
      * See {@link https://docs.mongodb.com/manual/reference/operator/query-logical/}
      */
     not: (field, value) => {
-      console.log('not');
+      logger('not');
       Object.assign(self.payload, { [field]: { $not: value } });
       return self;
     },

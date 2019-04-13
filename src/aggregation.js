@@ -1,3 +1,5 @@
+const logger = process.env.DEBUG ? console.log : null;
+
 let payload = {};
 
 const payload_stringfy = payload => {
@@ -14,19 +16,19 @@ const payload_parse = payload => {
  */
 const Aggregation = () => ({
   sort: sort => {
-    console.log("sort");
+    logger("sort");
     const field = Object.keys(sort)[0];
     const value = Object.values(sort)[0];
     payload = Object.assign({}, payload, { $sort: { [field]: value } });
     return Find(query);
   },
   limit: number => {
-    console.log("limit");
+    logger("limit");
     payload = Object.assign({}, payload, { $limit: number });
     return Find(query);
   },
   skip: number => {
-    console.log("skip");
+    logger("skip");
     payload = Object.assign({}, payload, { $skip: number });
     return Find(query);
   },
