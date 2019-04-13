@@ -1,6 +1,6 @@
 {
   "name": "querybuilder",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "MongoDB Query Builder",
   "main": "src/index.js",
   "author": "tegila",
