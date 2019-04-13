@@ -1,4 +1,4 @@
-const logger = process.env.DEBUG ? console.log : null;
+const logger = process.env.DEBUG ? console.log : () => null;
 /**
  * Query and Projection Operators
  * See {@link https://docs.mongodb.com/manual/reference/operator/query/}
